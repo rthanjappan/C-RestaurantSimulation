@@ -1,0 +1,66 @@
+The name of the restaurant :  SunRise
+The level of business : 2
+The number of tables in the restaurant : 3
+The type of the restaurant : 0
+The size of the tables : 4
+
+The waitress information : 
+number of Newbies level : 5  serving time of newbies : 6
+number of Seasoned level : 8   serving time of seasoned : 4
+number of Professional level : 2  professionalTime:  2
+clockTime : 10:01:00
+clockTime : 10:02:00
+clockTime : 10:03:00
+clockTime : 10:04:00
+clockTime : 10:05:00
+clockTime : 10:06:00
+clockTime : 10:07:00
+
+The customer 1001  arrives.
+clockTime : 10:08:00
+
+The customer 1001  is seated
+allocating waitress ID 0(professional)  to customer 1001
+
+Now serving customer  number 1001
+
+The customer 1002  arrives.
+clockTime : 10:09:00
+clockTime : 10:10:00
+
+
+allocating the table 2 for customer  : 1002
+clockTime : 10:11:00
+
+The customer 1002  is seated
+allocating waitress ID 1(professional)  to customer 1002
+
+Now serving customer  number 1002
+clockTime : 10:12:00
+clockTime : 10:13:00
+clockTime : 10:14:00
+clockTime : 10:15:00
+
+The customer 1003  arrives.
+clockTime : 10:16:00
+clockTime : 10:17:00
+
+
+allocating the table 3 for customer  : 1003
+clockTime : 10:18:00
+
+The customer 1002  is leaving.
+Vacating the table no 2
+deallocating waitress ID 1 from customer 1002
+
+The customer 1003  is seated
+allocating waitress ID 2(seasoned)  to customer 1003
+
+Now serving customer  number 1003
+clockTime : 10:19:00
+clockTime : 10:20:00
+clockTime : 10:21:00
+
+The customer 1001  is leaving.
+Vacating the table no 1
+deallocating waitress ID 0 from customer 1001

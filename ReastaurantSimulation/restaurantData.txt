@@ -1,0 +1,17 @@
+name(length 15)
+levelOfBusiness(0.slow,1.busy,2.slammed) NumberOfTables(n) TypeOfRestaurant(0.Menu tiers,1.bistro,2.gourmet) TableSize(n)
+NewbiesCount newbiesTime
+SeasonedCount SeasonedTime
+ProfessionalCount ProfessionalTime
+
+
+Sample configuration file
+--------------------------
+SunRise        
+2 3 0 4
+5 6
+8 4
+2 2
+
+  
+

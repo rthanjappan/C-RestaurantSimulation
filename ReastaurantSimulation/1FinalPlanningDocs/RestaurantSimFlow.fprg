@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Rosemol"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2019-03-31 11:19:07 AM"/>
+        <attribute name="created" value="Um9zZW1vbDtWQVJHSEVTRS1ERUxMMDc7MjAxOS0wMy0yNDswOTowMzozOCBBTTszMDQ0"/>
+        <attribute name="edited" value="Um9zZW1vbDtWQVJHSEVTRS1ERUxMMDc7MjAxOS0wMy0zMTsxMToxOTowNyBBTTsyMTszMTk2"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <if expression="choice ==1">
+                <then>
+                    <assign variable="iFromUserChoice" expression="0"/>
+                    <call expression="mainLine()"/>
+                </then>
+                <else/>
+            </if>
+            <if expression="choice ==2">
+                <then>
+                    <assign variable="iFromUserChoice" expression="1"/>
+                    <call expression="mainLine()"/>
+                </then>
+                <else/>
+            </if>
+            <if expression="choice ==3">
+                <then>
+                    <call expression="PrnHeadings()"/>
+                    <output expression="&quot;Running the restaurant&quot;" newline="True"/>
+                    <call expression="runTheRestaurant()"/>
+                </then>
+                <else/>
+            </if>
+            <if expression="choice ==4">
+                <then>
+                    <call expression="PrnHeadings()"/>
+                    <output expression="&quot;Display customer details.&quot;" newline="True"/>
+                    <call expression="displayCustomers()"/>
+                </then>
+                <else/>
+            </if>
+            <if expression="choice ==5">
+                <then>
+                    <call expression="PrnHeadings()"/>
+                    <output expression="&quot;Final report&quot;" newline="True"/>
+                    <call expression="displayFinalReport()"/>
+                </then>
+                <else/>
+            </if>
+            <if expression="choice ==6">
+                <then>
+                    <call expression="return"/>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="allocateFromWaitingList" type="None" variable="">
+        <parameters>
+            <parameter name="tableNO" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <if expression="!waitingList.empty()">
+                <then>
+                    <for variable="i" start="0" end="customers.size()-1" direction="inc" step="1">
+                        <if expression="waitingList[0].getCustID() == customers[i].getCustID()">
+                            <then>
+                                <call expression="allocateTable(customers[i], tables[tableNo], clockTime);"/>
+                                <if expression="customers[i].getSeated() == true">
+                                    <then>
+                                        <call expression="waitingList.erase(waitingList.begin());"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                            </then>
+                            <else/>
+                        </if>
+                    </for>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="allocateTable" type="None" variable="">
+        <parameters>
+            <parameter name="customer" type="String" array="False"/>
+            <parameter name="table" type="String" array="False"/>
+            <parameter name="timeOfActivity" type="String" array="False"/>
+        </parameters>
+        <body>
+            <call expression="increment(&quot;00:01:00&quot;)"/>
+            <if expression="table.getOccupied()==false">
+                <then>
+                    <if expression="cust.getArrivalTime()&lt;timeOfActivity">
+                        <then>
+                            <call expression="customer.setTableNo(table.getTableNo())"/>
+                            <call expression="table.setOccupied(1)"/>
+                            <call expression="customer.setSeatedTime(timeOfActivity+increment)"/>
+                            <call expression="customer.setSeated(true)"/>
+                            <output expression="&quot;Allocating the table &quot;&amp;customer.getTableNo()+1&amp;&quot; for customer &quot;&amp; customer.getCustID()" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="allocateWaitress" type="None" variable="">
+        <parameters>
+            <parameter name="cust" type="String" array="False"/>
+            <parameter name="actTime" type="String" array="False"/>
+        </parameters>
+        <body>
+            <if expression="cust.getIsWaitressAllocated() == true">
+                <then>
+                    <call expression="return"/>
+                </then>
+                <else>
+                    <for variable="i" start="0" end="waitresses.size()-1" direction="inc" step="1">
+                        <if expression="cust.getSeated() == true">
+                            <then>
+                                <call expression="waitresses[i].setAvailable(false)"/>
+                                <call expression="cust.setWaitress(waitresses[i])"/>
+                                <call expression="cust.setIsWaitressAllocated(true)"/>
+                                <call expression="cust.setServingTime(actTime + increment)"/>
+                                <call expression="break"/>
+                            </then>
+                            <else/>
+                        </if>
+                    </for>
+                </else>
+            </if>
+        </body>
+    </function>
+    <function name="comingRoutine" type="None" variable="">
+        <parameters/>
+        <body>
+            <for variable="i" start="0" end="table.size()" direction="inc" step="1">
+                <if expression="!tables[i].getOccupied()">
+                    <then>
+                        <call expression="allocateTable(cust, tables[i], cust.getArrivalTime())"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+            <if expression="cust.getTableNo() == -1">
+                <then>
+                    <call expression="addToWaitingList(cust)"/>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="createActivity" type="None" variable="">
+        <parameters/>
+        <body>
+            <assign variable="tempTime" expression="getRandomTime(15, 0)"/>
+            <assign variable="currentTime" expression="customers[customers.size()-1].getArrivalTime() + tempTime"/>
+            <assign variable="y" expression="random(1,tableSize)"/>
+            <call expression="cust(name, currentTime, y)"/>
+            <call expression="customers.push_back(cust)"/>
+        </body>
+    </function>
+    <function name="displayCustomers" type="None" variable="">
+        <parameters/>
+        <body>
+            <if expression="customers.empty()">
+                <then>
+                    <output expression="&quot;No customers available.&quot;" newline="True"/>
+                </then>
+                <else>
+                    <for variable="i" start="0" end="customers.size()-1" direction="inc" step="1">
+                        <output expression="customers[i]" newline="True"/>
+                    </for>
+                </else>
+            </if>
+        </body>
+    </function>
+    <function name="displayFinalReport" type="None" variable="">
+        <parameters/>
+        <body>
+            <call expression="displayConfigParameters()"/>
+            <call expression="displayAveWaitingTime()"/>
+            <call expression="displayAveWaitingParties()"/>
+            <call expression="displayAveTurnAroundTime()"/>
+        </body>
+    </function>
+    <function name="initialization" type="None" variable="">
+        <parameters/>
+        <body>
+            <call expression="openFile(&quot;RestaurantConfig.txt&quot;, inputFile, &quot;Restaurant configuration &quot;)"/>
+            <if expression="!inputFile.fail()">
+                <then>
+                    <call expression="readConfigFile()"/>
+                </then>
+                <else/>
+            </if>
+            <call expression="initialize numPartySizes"/>
+            <call expression="initialize tables"/>
+            <call expression="create waitresses"/>
+        </body>
+    </function>
+    <function name="leavingRoutine" type="None" variable="">
+        <parameters>
+            <parameter name="customer" type="String" array="False"/>
+        </parameters>
+        <body>
+            <call expression="vacateTable(cust,cust.getTableNo())"/>
+        </body>
+    </function>
+    <function name="mainLine" type="None" variable="">
+        <parameters/>
+        <body>
+            <call expression="initialization()"/>
+            <output expression="&quot;Please enter the time restaurant opens : &quot;" newline="True"/>
+            <input variable="restaurantOpenTime"/>
+            <assign variable="clockTime" expression="restaurantOpenTime"/>
+            <assign variable="currentTime" expression="restaurantOpenTime"/>
+            <call expression="runTheRestaurant()"/>
+        </body>
+    </function>
+    <function name="runTheRestaurant" type="None" variable="">
+        <parameters/>
+        <body>
+            <call expression="createActivity()"/>
+            <call expression="allocateTable(customers[customers.size() - 1],table,clockTime);"/>
+            <call expression="increment(&quot;00:01:00&quot;)"/>
+            <assign variable="choice" expression="&quot;a&quot;"/>
+            <assign variable="count" expression="15"/>
+            <while expression="choice!=&quot;q&quot;">
+                <call expression="updateClockTime()"/>
+                <assign variable="count" expression="count-1"/>
+                <if expression="count == 0">
+                    <then>
+                        <output expression="&quot;Do you want to continue (q for quit)&quot;" newline="True"/>
+                        <input variable="choice"/>
+                        <assign variable="count" expression="15"/>
+                        <assign variable="clockTime" expression="clockTime + increment"/>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Clock Time : &quot;&amp;clockTime" newline="True"/>
+                <call expression="displayFinalReport()"/>
+            </while>
+        </body>
+    </function>
+    <function name="updateClockTime" type="None" variable="">
+        <parameters/>
+        <body>
+            <for variable="i" start="0" end="customers.size()" direction="inc" step="1">
+                <if expression="customers[i].getArrivalTime().compareTo(clockTime) == 0)">
+                    <then>
+                        <output expression="&quot;The customer &quot;&amp;customers[i].getCustID()&amp;&quot;  arrives.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <call expression="createActivity()"/>
+                <if expression="customers[i].getSeatedTime().compareTo(clockTime) == 0)">
+                    <then>
+                        <output expression="&quot;The customer &quot;&amp;customers[i].getCustID()&amp;&quot;  is seated.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="customers[i].getServingTime().compareTo(clockTime) == 0)">
+                    <then>
+                        <output expression="&quot;Allocating waitress to the customer &quot;&amp;customers[i].getCustID()" newline="True"/>
+                        <output expression="&quot;Now serving the customer &quot;&amp;customers[i].getCustID()" newline="True"/>
+                        <call expression="leavingRoutine(customers[i])"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="customers[i].getLeavingTime().compareTo(clockTime) == 0)">
+                    <then>
+                        <output expression="&quot;deallocating waitress from the customer &quot;&amp;customers[i].getCustID()" newline="True"/>
+                        <output expression="&quot;The customer &quot;&amp;customers[i].getCustID()&amp;&quot; is leaving&quot;" newline="True"/>
+                        <output expression="&quot;Vacatint the table no &quot;&amp;customers[i].getTableNo()" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <call expression="allocateFromWaitingList(cusomers[i].getTableNo())"/>
+                <call expression="allocateWaitresses(customers[i],clockTime)"/>
+                <call expression="sleep(300)"/>
+            </for>
+        </body>
+    </function>
+    <function name="vacateTable" type="None" variable="">
+        <parameters>
+            <parameter name="customer" type="String" array="False"/>
+            <parameter name="tableNO" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <if expression="tableNo == -1">
+                <then>
+                    <call expression="return"/>
+                </then>
+                <else>
+                    <if expression="cust.getIsWaitressAllocated() == true">
+                        <then>
+                            <assign variable="minSpent" expression="getRandomTime(15, 10)"/>
+                            <assign variable="spentTime" expression="restType.getCookingTime() +&#9;cust.getWaitress().getServiceTime()*cust.getPartySize()"/>
+                            <call expression="temp(0,spentTime,0)"/>
+                            <assign variable="vacatingTime" expression="cust.getServingTime() + temp"/>
+                            <call expression="cust.setLeavingTime(vacatingTime)"/>
+                        </then>
+                        <else/>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

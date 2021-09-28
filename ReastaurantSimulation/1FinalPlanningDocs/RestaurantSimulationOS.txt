@@ -1,0 +1,77 @@
+Restaurant Simulation Output Spec
+
+
+Restaurant Simulation Main Manu:
+--------------------------------
+1.Configuring the restaurant from the file
+2.Configuring the restaurant from the user
+3.Running the restaurant
+4.Displaying the customer details
+5.Final Report
+6.exit
+
+
+1)Configuring the restaurant
+-----------------------------
+Please enter the time restaurant opens:hh:mm:ss
+
+2)Configuring the restaurant from the user
+------------------------------------------
+Please enter the name of the restaurant : X----X
+Please enter the level of business :##
+Please enter the number of tables:##
+Please enter the type of the restaurant :##
+Please enter the size of tables:##
+
+Please enter the number of newbies level :##
+Please enter the serving time of newbies level :##
+
+Please enter the number of seasoned level :##
+Please enter the serving time of seasoned level :##
+
+Please enter the number of professionallevel :##
+Please enter the serving time of professionallevel :##
+
+Please enter the time restaurant opens:hh:mm:ss
+
+
+
+
+3)Running the restaurant
+--------------------------
+Clock time : hh:mm:ss
+Customer #### arrives.
+allocating table for customer ####.
+Customer #### is seated.
+Now serving customer ####.
+Customer #### is leaving.
+
+4)Displaying customer details
+---------------------------
+Customer ID : ##
+Name : X----X
+Arrival Time : hh:mm:ss
+Seated Time : hh:mm:ss
+Serving Time : hh:mm:ss
+LeavingTime : hh:mm:ss
+Party Size :##
+Table No : ##
+waitressType : professional/seasoned/newbies
+
+
+5)Final report
+--------------
+
+The values of the configuration parameters 
+--------------------------------------------
+The name of the restaurant :X----X
+The level of business:X----X
+The number of tables:X----X
+The type of restaurant:X----X
+
+The average waiting time for parties : hh:mm:ss
+
+The average number of parties waiting for a table :##
+
+The average turnaround time(the time from when the
+ party arrives to when they leave the restaurant ): hh:mm:ss

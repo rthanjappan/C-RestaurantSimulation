@@ -1,0 +1,11 @@
+actTime partySize
+
+
+
+actTime coming=1 partySize tableNo=0
+actTime leaving=0 partySize tableNo=##
+
+
+
+1552769219 1 4 0 
+1552769819 0 4 11
